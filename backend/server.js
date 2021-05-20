@@ -5,19 +5,32 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
-const port = 5000;
+const passport = require('passport');
+const expressSession = require('express-session')({
+    secret: 'secret',
+    resave: false,
+    saveUninitiliazed: false
+});
 
+
+//===============EXPRESS=================
 app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(expressSession);
+app.use(passport.initialize());
+app.use(passport.session());
 
+
+//===============MONGODB=================
 mongoose.connect('mongodb://127.0.0.1:27017/ProjetAP', { useNewUrlParser: true, useUnifiedTopology: true });
-
 const connection = mongoose.connection;
-
 connection.once('open', function () {
     console.log("MongoDB database connection established successfully");
 })
 
+
+//===============ROUTES=================
 const lessonsRouter = require('./routes/lessons');
 const usersRouter = require('./routes/users');
 const subjectsRouter = require('./routes/subjects');
@@ -32,6 +45,9 @@ app.use('/classes', classesRouter);
 app.use('/roles', rolesRouter);
 app.use('/professors', professorsRouter)
 
+
+//===============PORT=================
+const port = 5000;
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
 });
