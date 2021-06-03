@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { login } from '../redux/actions/userActions';
 
-export default function Login(props) {
+export default function LoginPage() {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     let history = useHistory();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -31,9 +32,10 @@ export default function Login(props) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        login({ email }, { password }).then(() => {
-            history.push('/calendar')
-        });
+        dispatch(login(email, password))
+            .then(() => {
+                history.push("/calendar");
+            });
     }
 
     return (
@@ -64,31 +66,12 @@ export default function Login(props) {
             />
             <Button
                 type="submit"
-                fullWidth
                 variant="contained"
                 color="primary"
             >
                 Connexion
               </Button>
         </form>
-        /* <form action="/login" method="post">
-            <div class="title">
-                <h3>Login</h3>
-            </div>
-            <div class="field">
-                <label>Username:</label>
-                <input type="text" name="username" />
-                <br />
-            </div>
-            <div class="field">
-                <label>Password:</label>
-                <input type="password" name="password" required />
-            </div>
-            <div class="field">
-                <input class="submit-btn" type="submit" value="Submit" required />
-            </div>
-            <label id="error-message"></label>
-        </form> */
     );
 }
 
@@ -98,4 +81,4 @@ const mapStateToProps = state => {
     }
 }
 
-connect(mapStateToProps, { login })(Login)
+connect(mapStateToProps, { login })(LoginPage)

@@ -7,7 +7,7 @@ export default function ClassesList(props) {
 
     useEffect(() => {
         // Va chercher les classes existantes.
-        axios.get('http://localhost:5000/classes/')
+        axios.get('http://localhost:5000/api/classes/')
             .then(response => {
                 setClasses(response.data.map(classe => classe.classeName));
             })

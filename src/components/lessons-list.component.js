@@ -5,7 +5,7 @@ import EditLessons from './edit-lesson.component';
 
 Modal.setAppElement('#root')
 
-export default function LessonsList(props) {
+export default function LessonsList() {
     const [lessons, setLessons] = useState([]);
     const [professors, setProfessors] = useState([]);
     const [open, isOpen] = useState(false);
@@ -14,7 +14,7 @@ export default function LessonsList(props) {
     const [correspondingProfessor, setCorrespondingProfessor] = useState('');
 
     useEffect(() => {
-        axios.get('http://localhost:5000/lessons/')
+        axios.get('http://localhost:5000/api/lessons/')
             .then(response => {
                 setLessons(response.data)
             })
@@ -22,7 +22,7 @@ export default function LessonsList(props) {
                 console.log(error);
             });
 
-        axios.get('http://localhost:5000/professors/')
+        axios.get('http://localhost:5000/api/professors/')
             .then(response => {
                 setProfessors(response.data)
             })
@@ -48,7 +48,7 @@ export default function LessonsList(props) {
     }
 
     function deleteLesson(lessonId) {
-        axios.delete(`http://localhost:5000/lessons/${lessonId}`)
+        axios.delete(`http://localhost:5000/api/lessons/${lessonId}`)
             .then(res => console.log(res.data));
         window.location.reload();
     }

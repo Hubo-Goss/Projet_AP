@@ -3,49 +3,55 @@ import axios from 'axios';
 import ClassesList from './lists/classes-list.component';
 import RolesList from './lists/roles-list.component';
 
-export default function CreateUser(props) {
+export default function CreateUser() {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [login, setLogin] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [classe, setClasse] = useState('');
     const [role, setRole] = useState('');
 
     function onChangeFirstName(e) {
         setFirstName(e.target.value)
+        console.log(e.target.value)
     }
 
     function onChangeLastName(e) {
         setLastName(e.target.value)
+        console.log(e.target.value)
     }
 
-    function onChangeLogin(e) {
-        setLogin(e.target.value)
+    function onChangeEmail(e) {
+        setEmail(e.target.value)
+        console.log(e.target.value)
     }
 
     function onChangePassword(e) {
         setPassword(e.target.value)
+        console.log(e.target.value)
     }
 
     function onChangeClasse(classe) {
         setClasse(classe)
+        console.log(classe)
     }
 
     function onChangeRole(role) {
         setRole(role)
+        console.log(role)
     }
 
     function onSubmit(e) {
         e.preventDefault();
         const newUser = {
-            firstName: { firstName },
-            lastName: { lastName },
-            login: { login },
-            password: { password },
-            classe: { classe },
-            role: { role }
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password,
+            classe: classe,
+            role: role
         };
-        axios.post('http://localhost:5000/users/add', newUser)
+        axios.post('http://localhost:5000/api/users/add', newUser)
             .then(res => console.log(res.data));
     }
 
@@ -72,12 +78,12 @@ export default function CreateUser(props) {
                     />
                 </div>
                 <div className="form-group">
-                    <label>Identifiant : </label>
+                    <label>Email : </label>
                     <input type="text"
                         required
                         className="form-control"
-                        value={login}
-                        onChange={onChangeLogin}
+                        value={email}
+                        onChange={onChangeEmail}
                     />
                 </div>
                 <div className="form-group">

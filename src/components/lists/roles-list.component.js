@@ -7,7 +7,7 @@ export default function ClassesList(props) {
 
     useEffect(() => {
         // Va chercher les roles existantes.
-        axios.get('http://localhost:5000/roles/')
+        axios.get('http://localhost:5000/api/roles/')
             .then(response => {
                 setRoles(response.data.map(role => role.description));
                 setRole(response.data[0].description);

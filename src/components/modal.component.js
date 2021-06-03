@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ReactModal } from 'react-modal';
 
-export default function Modal(props) {
+export default function Modal() {
     const [showModal, setShowModal] = useState(false);
 
     function handleOpenModal() {

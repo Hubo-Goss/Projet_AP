@@ -7,7 +7,7 @@ import ClassesList from './lists/classes-list.component';
 import SubjectsList from './lists/subjects-list.component';
 
 
-export default function CreateLesson(props) {
+export default function CreateLesson() {
     const [professorId, setProfessorId] = useState('');
     const [description, setDescription] = useState('');
     const [duration, setDuration] = useState('');
@@ -62,7 +62,7 @@ export default function CreateLesson(props) {
             maxStudent: maxStudent,
             date: date
         };
-        axios.post('http://localhost:5000/lessons/add', lesson)
+        axios.post('http://localhost:5000/api/lessons/add', lesson)
             .then(res => console.log(res.data));
     }
 

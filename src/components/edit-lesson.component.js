@@ -55,7 +55,7 @@ export default function EditLessons(props) {
             maxStudent: maxStudent,
             date: date
         };
-        axios.post(`http://localhost:5000/lessons/update/${lessonId}`, lesson)
+        axios.post(`http://localhost:5000/api/lessons/update/${lessonId}`, lesson)
             .then(res => console.log(res.data));
     }
 

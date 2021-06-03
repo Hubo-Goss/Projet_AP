@@ -7,7 +7,7 @@ export default function SubjectsList(props) {
 
     useEffect(() => {
         // Va chercher les matières existantes.
-        axios.get('http://localhost:5000/subjects/')
+        axios.get('http://localhost:5000/api/subjects/')
             .then(response => {
                 setSubjects(response.data.map(subject => subject.subjectName));
             })

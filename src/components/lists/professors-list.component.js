@@ -6,7 +6,7 @@ export default function ProfessorsList(props) {
 
     useEffect(() => {
         // Va chercher les professeurs existants parmis les users.
-        axios.get('http://localhost:5000/professors/')
+        axios.get('http://localhost:5000/api/professors/')
             .then(response => {
                 setProfessors(response.data);
             })
