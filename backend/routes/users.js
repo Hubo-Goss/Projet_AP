@@ -2,6 +2,18 @@ const router = require('express').Router();
 const User = require('../models/user.model');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
+// const needsRole = function (role) {
+//     return function (req, res, next) {
+//         axios.get(`http://localhost:5000/api/users/${req.user}`)
+//         if (req.user && req.user.role === role)
+//             next();
+//         else
+//             res.send(401, 'Unauthorized')
+//     }
+// }
+//     axios.delete(`http://localhost:5000/api/lessons/${lessonId}`)
+//         .then(res => console.log(res.data));
+// }
 
 router.route('/').get((req, res) => {
     User.find()
@@ -9,7 +21,18 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/:id').get((req, res) => {
+    User.findById(req.params.id)
+        .then(users => res.json(users))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/add').post((req, res) => {
+    // needsRole('Admin');
+    console.log('~~~~~~~~')
+    console.log(req.user)
+    console.log('~~~~~~~~')
+
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const email = req.body.email;
@@ -42,16 +65,17 @@ router.route('/add').post((req, res) => {
 
 router.post('/login',
     function (req, res, next) {
-        console.log("salutsalut")
-        console.log(req.body)
-        console.log('================')
+        console.log("routes : users : .post/login")
+        console.log("====================================================================================")
         next()
     },
     passport.authenticate('local'),
     (req, res) => {
-        console.log(req.body)
+        console.log("====================================================================================")
+        console.log(".authenticate")
         const user = JSON.parse(JSON.stringify(req.user))
         const cleanUser = Object.assign({}, user)
+        console.log(cleanUser.role)
         if (cleanUser.password) {
             console.log(`Deleting ${cleanUser.password}`)
             delete cleanUser.password

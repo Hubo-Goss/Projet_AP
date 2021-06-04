@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import ClassesList from './lists/classes-list.component';
 import RolesList from './lists/roles-list.component';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 
 export default function CreateUser() {
     const [firstName, setFirstName] = useState('');
@@ -10,6 +12,7 @@ export default function CreateUser() {
     const [password, setPassword] = useState('');
     const [classe, setClasse] = useState('');
     const [role, setRole] = useState('');
+    const [open, setOpen] = useState(false);
 
     function onChangeFirstName(e) {
         setFirstName(e.target.value)
@@ -41,6 +44,10 @@ export default function CreateUser() {
         console.log(role)
     }
 
+    function handleClose() {
+        setOpen(false)
+    }
+
     function onSubmit(e) {
         e.preventDefault();
         const newUser = {
@@ -52,7 +59,15 @@ export default function CreateUser() {
             role: role
         };
         axios.post('http://localhost:5000/api/users/add', newUser)
-            .then(res => console.log(res.data));
+            .then(res => {
+                console.log(res.data)
+                setOpen(true)
+            });
+
+        setFirstName('');
+        setLastName('');
+        setEmail('');
+        setPassword('');
     }
 
     return (
@@ -107,6 +122,11 @@ export default function CreateUser() {
                     <input type="submit" value="Créer l'utilisateur" className="btn btn-primary" />
                 </div>
             </form>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success">
+                    User added !
+                </Alert>
+            </Snackbar>
         </div>
     )
 }
