@@ -2,23 +2,16 @@ const router = require('express').Router();
 const User = require('../models/user.model');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
-// const needsRole = function (role) {
-//     return function (req, res, next) {
-//         axios.get(`http://localhost:5000/api/users/${req.user}`)
-//         if (req.user && req.user.role === role)
-//             next();
-//         else
-//             res.send(401, 'Unauthorized')
-//     }
-// }
-//     axios.delete(`http://localhost:5000/api/lessons/${lessonId}`)
-//         .then(res => console.log(res.data));
-// }
+const needsRole = require('../roleMiddleware');
 
 router.route('/').get((req, res) => {
-    User.find()
-        .then(users => res.json(users))
-        .catch(err => res.status(400).json('Error: ' + err));
+    console.log('~~~~~~~~USER~~~~~~~~')
+    console.log(req.user)
+    if (req.user) {
+        return res.status(200).json({ user: req.user })
+    } else {
+        return res.status(200).json({ user: null })
+    }
 });
 
 router.route('/:id').get((req, res) => {
@@ -27,11 +20,11 @@ router.route('/:id').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/add').post((req, res) => {
-    // needsRole('Admin');
-    console.log('~~~~~~~~')
-    console.log(req.user)
-    console.log('~~~~~~~~')
+router.route('/add').post((req, res, next) => needsRole(req, res, next, ['Admin']), (req, res) => {
+    // console.log('cookie', req.cookies);
+    // console.log('============')
+    // console.log(req.user)
+    // console.log('~~~~~~~~')
 
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
@@ -64,20 +57,14 @@ router.route('/add').post((req, res) => {
 });
 
 router.post('/login',
-    function (req, res, next) {
-        console.log("routes : users : .post/login")
-        console.log("====================================================================================")
-        next()
-    },
     passport.authenticate('local'),
     (req, res) => {
-        console.log("====================================================================================")
-        console.log(".authenticate")
+        // console.log("===============================================")
+        // console.log(".authenticate")
         const user = JSON.parse(JSON.stringify(req.user))
         const cleanUser = Object.assign({}, user)
-        console.log(cleanUser.role)
+        console.log(`role : ${cleanUser.role}`)
         if (cleanUser.password) {
-            console.log(`Deleting ${cleanUser.password}`)
             delete cleanUser.password
         }
         res.status(200).json({ user: cleanUser })

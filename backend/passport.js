@@ -7,19 +7,19 @@ module.exports = function (passport) {
         new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
             User.findOne({ email }).then(user => {
                 if (!user) {
-                    return (console.log("passports.js : Pas d'utilisateur existant avec cette adresse Email"),
-                        done(null, false, { message: 'That email is not register' }))
+                    console.log("Mauvaise adresse mail (fichier : passports.js)");
+                    return done(null, false, { message: 'That email is not register' })
                 }
                 bcrypt.compare(password, user.password, (err, isMatch) => {
-                    if (err) throw (console.log("passports.js : erreur (mot de passe pas decrypté)"),
+                    if (err) throw (console.log("Mot de passe pas decrypté (fichier : passports.js)"),
                         err);
                     if (isMatch) {
-                        return (console.log("passports.js : connecté (email correct et mot de passe decrypté)"),
-                            done(null, user));
+                        console.log("Connecté (fichier : passports.js)")
+                        return done(null, user);
                     }
                     else {
-                        return (console.log("passports.js : mot de passe incorrect"),
-                            done(null, false, { message: 'Password incorrect' }))
+                        console.log("Mot de passe incorrect (fichier : passports.js)")
+                        return done(null, false, { message: 'Incorrect password' })
                     }
                 })
             }).catch(err => console.log(err))
@@ -28,10 +28,18 @@ module.exports = function (passport) {
 
     passport.serializeUser((user, done) => {
         done(null, user.id);
+        console.log(``)
+        console.log(`============> serializeUser() :`)
+        // console.log(`___1___ user : ${user}`)
+        // console.log(`___2___ user.id : ${user.id}`)
     });
 
     passport.deserializeUser((id, done) => {
+        console.log(``)
+        console.log(`============> deserializeUser() :`)
         User.findById(id, function (err, user) {
+            // console.log(`___3___ user : ${user}`)
+            // console.log(`___4___ user.id : ${id}`)
             done(err, user);
         });
     });

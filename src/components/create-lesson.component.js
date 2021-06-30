@@ -2,24 +2,27 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import ProfessorsList from './lists/professors-list.component';
 import ClassesList from './lists/classes-list.component';
 import SubjectsList from './lists/subjects-list.component';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
+import { useSelector } from "react-redux"
 
 
 export default function CreateLesson() {
-    const [professorId, setProfessorId] = useState('');
+    const user = useSelector(state => state.user)
+
+    const professorId = (user.userInfo._id);
     const [description, setDescription] = useState('');
     const [duration, setDuration] = useState('');
     const [subject, setSubject] = useState('');
     const [classe, setClasse] = useState('');
     const [maxStudent, setMaxStudent] = useState('');
     const [date, setDate] = useState(new Date());
+    const [open, setOpen] = useState(false);
+    const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+    const [snackbarText, setSnackbarText] = useState('Lesson created!');
 
-    function onChangeProfessorId(id) {
-        setProfessorId(id);
-        console.log(id)
-    }
 
     function onChangeDescription(e) {
         setDescription(e.target.value);
@@ -51,6 +54,18 @@ export default function CreateLesson() {
         console.log(date)
     }
 
+    function handleClose() {
+        setOpen(false)
+    }
+
+    function changeSnackbar(severity) {
+        setSnackbarSeverity(severity)
+        if (severity === "error")
+            setSnackbarText("Unauthorized access.")
+        else
+            setSnackbarText("Lesson created!")
+    }
+
     function onSubmit(e) {
         e.preventDefault();
         const lesson = {
@@ -62,18 +77,21 @@ export default function CreateLesson() {
             maxStudent: maxStudent,
             date: date
         };
-        axios.post('http://localhost:5000/api/lessons/add', lesson)
-            .then(res => console.log(res.data));
+        axios.post('http://localhost:5000/api/lessons/add', lesson, { withCredentials: true })
+            .then(res => {
+                console.log(res.data)
+                if (res.data === "Unauthorized")
+                    changeSnackbar("error")
+                else
+                    changeSnackbar("success")
+                setOpen(true)
+            });
     }
 
     return (
         <div>
             <h3>Créer une séance d'AP</h3>
             <form onSubmit={onSubmit}>
-                <div className="form-group">
-                    <label>Professeur : </label>
-                    <ProfessorsList onChange={onChangeProfessorId} />
-                </div>
                 <div className="form-group">
                     <label>Description : </label>
                     <input type="text"
@@ -94,11 +112,11 @@ export default function CreateLesson() {
                 </div>
                 <div className="form-group">
                     <label>Matière : </label>
-                    <SubjectsList onChange={onChangeSubject} />
+                    <SubjectsList onChange={onChangeSubject} subject='Sélectionnez une matière' />
                 </div>
                 <div className="form-group">
                     <label>Classe(s) : </label>
-                    <ClassesList onChange={onChangeClasse} />
+                    <ClassesList onChange={onChangeClasse} classe='Sélectionnez la classe concernée' />
                 </div>
                 <div className="form-group">
                     <label>Nombre d'élèves maximum : </label>
@@ -119,6 +137,12 @@ export default function CreateLesson() {
                     <input type="submit" value="Créer la séance" className="btn btn-primary" />
                 </div>
             </form>
+            <button onClick={(req, res) => console.log(`${user.userInfo.firstName} ${user.userInfo.lastName}`)}>user</button>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity={snackbarSeverity}>
+                    {snackbarText}
+                </Alert>
+            </Snackbar>
         </div>
     )
 

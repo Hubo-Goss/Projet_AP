@@ -13,6 +13,8 @@ export default function CreateUser() {
     const [classe, setClasse] = useState('');
     const [role, setRole] = useState('');
     const [open, setOpen] = useState(false);
+    const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+    const [snackbarText, setSnackbarText] = useState('User added!');
 
     function onChangeFirstName(e) {
         setFirstName(e.target.value)
@@ -48,6 +50,14 @@ export default function CreateUser() {
         setOpen(false)
     }
 
+    function changeSnackbar(severity) {
+        setSnackbarSeverity(severity)
+        if (severity === "error")
+            setSnackbarText("Unauthorized access.")
+        else
+            setSnackbarText("User added!")
+    }
+
     function onSubmit(e) {
         e.preventDefault();
         const newUser = {
@@ -58,9 +68,13 @@ export default function CreateUser() {
             classe: classe,
             role: role
         };
-        axios.post('http://localhost:5000/api/users/add', newUser)
+        axios.post('http://localhost:5000/api/users/add', newUser, { withCredentials: true })
             .then(res => {
                 console.log(res.data)
+                if (res.data === "Unauthorized")
+                    changeSnackbar("error")
+                else
+                    changeSnackbar("success")
                 setOpen(true)
             });
 
@@ -112,19 +126,19 @@ export default function CreateUser() {
                 </div>
                 <div className="form-group">
                     <label>Classe : </label>
-                    <ClassesList onChange={onChangeClasse} classe={''} />
+                    <ClassesList onChange={onChangeClasse} classe={'Select a class'} />
                 </div>
                 <div className="form-group">
                     <label>Role : </label>
-                    <RolesList onChange={onChangeRole} role={''} />
+                    <RolesList onChange={onChangeRole} role_={'Select a role'} />
                 </div>
                 <div className="form-group">
                     <input type="submit" value="Créer l'utilisateur" className="btn btn-primary" />
                 </div>
             </form>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity="success">
-                    User added !
+                <Alert onClose={handleClose} severity={snackbarSeverity}>
+                    {snackbarText}
                 </Alert>
             </Snackbar>
         </div>

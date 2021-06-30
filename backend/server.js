@@ -3,23 +3,34 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const app = express();
 const passport = require('passport');
 require('./passport')(passport);
-const session = require('express-session')({
-    secret: 'secret',
-    resave: false,
-    saveUninitialized: false
-});
+const cookieParser = require('cookie-parser');
+const session = require('express-session')
 
 
 //===============EXPRESS=================//
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true,
+    optionSuccessStatus: 200
+}
+app.use(cors(corsOptions));
+app.use(cookieParser()); //Permet de lire les cookies (doit être appelé avant "app.use(express.static('public'));")
 app.use(express.static('public'));
-app.use(session);
+app.use(session({
+    resave: true,
+    saveUninitialized: true,
+    secret: 'secret',
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7 * 2, // two weeks
+        //sameSite: true,
+        secure: false
+    }
+}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 

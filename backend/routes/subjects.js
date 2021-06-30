@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let Subject = require('../models/subject.model');
+const needsRole = require('../roleMiddleware');
 
 router.route('/').get((req, res) => {
     Subject.find()
@@ -7,7 +8,7 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/add').post((req, res) => {
+router.route('/add').post((req, res, next) => needsRole(req, res, next, 'Admin'), (req, res) => {
     const subjectName = req.body.subjectName;
 
     const newSubject = new Subject({ subjectName });

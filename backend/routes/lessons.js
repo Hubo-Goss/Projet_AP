@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let Lesson = require('../models/lesson.model');
+const needsRole = require('../roleMiddleware');
 
 router.route('/').get((req, res) => {
     Lesson.find()
@@ -7,7 +8,7 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/add').post((req, res) => {
+router.route('/add').post((req, res, next) => needsRole(req, res, next, ['Admin', 'Professor']), (req, res) => {
     const professorId = req.body.professorId;
     const description = req.body.description;
     const duration = Number(req.body.duration);

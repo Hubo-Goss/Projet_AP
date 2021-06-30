@@ -8,8 +8,8 @@ import { login } from '../redux/actions/userActions';
 export default function LoginPage() {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
-    let history = useHistory();
     const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -33,9 +33,7 @@ export default function LoginPage() {
     function handleSubmit(e) {
         e.preventDefault();
         dispatch(login(email, password))
-            .then(() => {
-                history.push("/calendar");
-            });
+        history.push('/calendar')
     }
 
     return (
@@ -70,7 +68,7 @@ export default function LoginPage() {
                 color="primary"
             >
                 Connexion
-              </Button>
+            </Button>
         </form>
     );
 }
