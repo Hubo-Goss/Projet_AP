@@ -10,7 +10,9 @@
     "@testing-library/user-event": "^12.8.1",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
+    "concurrently": "^6.2.0",
     "connect-ensure-login": "^0.1.1",
+    "http-proxy-middleware": "^2.0.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.1.0",
@@ -52,10 +54,9 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
-  },
-  "proxy": "http://localhost:5000",
-  "devDependencies": {
-    "concurrently": "^6.2.0"
+    ],
+    "devDependencies": {
+      "concurrently": "^6.2.0"
+    }
   }
 }
