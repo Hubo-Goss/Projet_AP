@@ -1,15 +1,13 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/actions/userActions';
 
 export default function Navbar() {
     const dispatch = useDispatch()
-    const history = useHistory();
 
     function handleLogout() {
         dispatch(logout())
-        history.push('/')
     }
 
     const user = useSelector(state => state.user.userInfo)
@@ -34,7 +32,10 @@ export default function Navbar() {
                     {user.role === 'Professor' || user.role === 'Admin' ? createLesson : ''}
                     {user.role === 'Admin' ? createUser : ''}
                     <li className="navbar-item">
-                        <Link className="nav-link" onClick={() => handleLogout()}>Logout</Link>
+                        <Link to="/my-lessons" className="nav-link">Mes leçons</Link>
+                    </li>
+                    <li className="navbar-item">
+                        <Link to="/" className="nav-link" onClick={() => handleLogout()}>Logout</Link>
                     </li>
                 </ul>
             </div>

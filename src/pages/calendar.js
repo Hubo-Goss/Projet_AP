@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
-import EditLessons from './edit-lesson.component';
+import EditLessons from './edit-lesson';
+import changeDate from '../components/change-date';
+import changeDuration from '../components/change-duration';
 
 Modal.setAppElement('#root')
 
-export default function LessonsList() {
+export default function Calendar() {
     const [lessons, setLessons] = useState([]);
     const [professors, setProfessors] = useState([]);
     const [open, isOpen] = useState(false);
@@ -30,12 +32,6 @@ export default function LessonsList() {
                 console.log(error);
             });
     }, []);
-
-    function changeDate(date) {
-        let dateArray = date.split("-")
-        date = <span>{dateArray[2].substr(0, 2) + '/' + dateArray[1] + '/' + dateArray[0]}</span>
-        return date
-    }
 
     function lessonDisplaySize(duration) {
         switch (duration) {
@@ -78,7 +74,7 @@ export default function LessonsList() {
                                 } else return ' '
                             })}</div>
                                 <div>Classe : {lesson.classe}</div>
-                                <div>Durée : {lesson.duration}min</div>
+                                <div>Durée : {changeDuration(lesson.duration)}</div>
                                 <div>Elèves inscrits : 0/{lesson.maxStudent}</div>
                                 <div>Leçon prévue le {changeDate(lesson.date)}</div>
                                 <p>Contenu de la leçon : {lesson.description}</p>

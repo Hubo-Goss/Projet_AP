@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import ClassesList from './lists/classes-list.component';
-import RolesList from './lists/roles-list.component';
+import ClassesList from '../components/classes-list';
+import RolesList from '../components/roles-list';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 

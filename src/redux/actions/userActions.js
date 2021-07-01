@@ -21,6 +21,7 @@ export const logout = () => (dispatch) => {
 export const checkLoggedIn = () => (dispatch) => {
     console.log("dispatch checkLoggedIn")
     axios.get("http://localhost:5000/api/users/", { withCredentials: true }).then((result) => {
+        console.log(result)
         return dispatch({ type: LOGIN_USER, payload: result.data })
     })
 }

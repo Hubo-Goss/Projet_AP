@@ -4,12 +4,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { checkLoggedIn } from './redux/actions/userActions.js';
 import { connect, useDispatch, useSelector } from 'react-redux';
 
-import Navbar from "./components/navbar.component";
-import Login from "./components/login.component";
-import LessonsList from "./components/calendar.component";
-import EditLessons from "./components/edit-lesson.component";
-import CreateLesson from "./components/create-lesson.component";
-import CreateUser from "./components/create-user.component";
+import Navbar from "./pages/navbar";
+import Login from "./pages/login";
+import LessonsList from "./pages/calendar";
+import EditLessons from "./pages/edit-lesson";
+import CreateLesson from "./pages/create-lesson";
+import CreateUser from "./pages/create-user";
+import MyLessons from "./pages/my-lessons";
 
 function App() {
   const dispatch = useDispatch()
@@ -43,6 +44,7 @@ function App() {
         <Route path="/edit/" component={EditLessons} />
         <Route path="/create_lesson" component={CreateLesson} />
         <Route path="/create_user" component={CreateUser} />
+        <Route path="/my-lessons" component={MyLessons} />
       </div>
     </Router>
   );

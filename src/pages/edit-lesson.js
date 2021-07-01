@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import ProfessorsList from './lists/professors-list.component';
-import ClassesList from './lists/classes-list.component';
-import SubjectsList from './lists/subjects-list.component';
+import ProfessorsList from '../components/professors-list';
+import ClassesList from '../components/classes-list';
+import SubjectsList from '../components/subjects-list';
 
 
 export default function EditLessons(props) {

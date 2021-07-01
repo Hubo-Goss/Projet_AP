@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import ClassesList from './lists/classes-list.component';
-import SubjectsList from './lists/subjects-list.component';
+import ClassesList from '../components/classes-list';
+import SubjectsList from '../components/subjects-list';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import { useSelector } from "react-redux"
@@ -93,6 +93,10 @@ export default function CreateLesson() {
             <h3>Créer une séance d'AP</h3>
             <form onSubmit={onSubmit}>
                 <div className="form-group">
+                    <label>Matière : </label>
+                    <SubjectsList onChange={onChangeSubject} subject='Sélectionnez une matière' />
+                </div>
+                <div className="form-group">
                     <label>Description : </label>
                     <input type="text"
                         required
@@ -109,10 +113,6 @@ export default function CreateLesson() {
                         value={duration}
                         onChange={onChangeDuration}
                     />
-                </div>
-                <div className="form-group">
-                    <label>Matière : </label>
-                    <SubjectsList onChange={onChangeSubject} subject='Sélectionnez une matière' />
                 </div>
                 <div className="form-group">
                     <label>Classe(s) : </label>
