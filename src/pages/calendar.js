@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
-import EditLessons from './edit-lesson';
 import changeDate from '../components/change-date';
 import changeDuration from '../components/change-duration';
 
@@ -11,7 +10,6 @@ export default function Calendar() {
     const [lessons, setLessons] = useState([]);
     const [professors, setProfessors] = useState([]);
     const [open, isOpen] = useState(false);
-    const [openEdit, isEditOpen] = useState(false);
     const [selectedLesson, setSelectedLesson] = useState('');
     const [correspondingProfessor, setCorrespondingProfessor] = useState('');
 
@@ -43,11 +41,9 @@ export default function Calendar() {
         }
     }
 
-    function deleteLesson(lessonId) {
-        axios.delete(`http://localhost:5000/api/lessons/${lessonId}`)
-            .then(res => console.log(res.data));
-        window.location.reload();
-    }
+    // function register() {
+    //     return <button onClick={() => {}}></button>
+    // }
 
     return (
         <div>
@@ -78,33 +74,11 @@ export default function Calendar() {
                                 <div>Elèves inscrits : 0/{lesson.maxStudent}</div>
                                 <div>Leçon prévue le {changeDate(lesson.date)}</div>
                                 <p>Contenu de la leçon : {lesson.description}</p>
-                                <button onClick={() => { isEditOpen(true) }}>Edit</button>
-                                <button onClick={() => { deleteLesson(selectedLesson) }}>Delete</button>
                                 <div className="creationDate">Créé le {changeDate(lesson.createdAt)}</div>
                             </div>
                         </div>
                     } else return ' '
                 })}</div>
-            </Modal>
-            <Modal isOpen={openEdit} className="modalContent" overlayClassName="modalOverlay" onRequestClose={() => isEditOpen(false)}>
-                {lessons.map(lesson => {
-                    if (lesson._id === selectedLesson) {
-                        return <div key="lesson._id">{professors.map(professor => {
-                            if (correspondingProfessor === professor._id) {
-                                return <EditLessons
-                                    key={selectedLesson}
-                                    lessonId={selectedLesson}
-                                    professorId={correspondingProfessor}
-                                    description={lesson.description}
-                                    duration={lesson.duration}
-                                    subject={lesson.subject}
-                                    maxStudent={lesson.maxStudent}
-                                    classe={lesson.classe}
-                                />
-                            } else return ' '
-                        })}</div>
-                    } else return ' '
-                })}
             </Modal>
         </div>
     )
