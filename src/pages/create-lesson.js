@@ -22,6 +22,7 @@ export default function CreateLesson() {
     const [open, setOpen] = useState(false);
     const [snackbarSeverity, setSnackbarSeverity] = useState('success');
     const [snackbarText, setSnackbarText] = useState('Lesson created!');
+    const registeredStudents = [];
 
 
     function onChangeDescription(e) {
@@ -75,7 +76,8 @@ export default function CreateLesson() {
             subject: subject,
             classe: classe,
             maxStudent: maxStudent,
-            date: date
+            date: date,
+            registeredStudents: registeredStudents
         };
         axios.post('http://localhost:5000/api/lessons/add', lesson, { withCredentials: true })
             .then(res => {

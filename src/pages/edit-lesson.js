@@ -2,24 +2,20 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import ProfessorsList from '../components/professors-list';
 import ClassesList from '../components/classes-list';
 import SubjectsList from '../components/subjects-list';
 
 
 export default function EditLessons(props) {
-    const lessonId = props.lessonId
-    const [professorId, setProfessorId] = useState(props.professorId);
+    const lessonId = props.lessonId;
+    const professorId = props.professorId;
     const [description, setDescription] = useState(props.description);
     const [duration, setDuration] = useState(props.duration);
     const [subject, setSubject] = useState(props.subject);
     const [classe, setClasse] = useState(props.classe);
     const [maxStudent, setMaxStudent] = useState(props.maxStudent);
     const [date, setDate] = useState(new Date());
-
-    function onChangeProfessorId(id) {
-        setProfessorId(id);
-    }
+    const registeredStudents = props.registeredStudents;
 
     function onChangeDescription(e) {
         setDescription(e.target.value);
@@ -53,7 +49,8 @@ export default function EditLessons(props) {
             subject: subject,
             classe: classe,
             maxStudent: maxStudent,
-            date: date
+            date: date,
+            registeredStudents: registeredStudents
         };
         axios.post(`http://localhost:5000/api/lessons/update/${lessonId}`, lesson)
             .then(res => console.log(res.data));
@@ -63,10 +60,6 @@ export default function EditLessons(props) {
         <div>
             <h3>Editer la séance d'AP</h3>
             <form onSubmit={onSubmit}>
-                <div className="form-group">
-                    <label>Professeur : </label>
-                    <ProfessorsList onChange={onChangeProfessorId} professorId={professorId} />
-                </div>
                 <div className="form-group">
                     <label>Description : </label>
                     <input type="text"

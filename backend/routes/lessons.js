@@ -16,8 +16,9 @@ router.route('/add').post((req, res, next) => needsRole(req, res, next, ['Admin'
     const classe = req.body.classe;
     const maxStudent = req.body.maxStudent;
     const date = req.body.date;
+    const registeredStudents = req.body.registeredStudents;
 
-    const newLesson = new Lesson({ professorId, description, duration, subject, classe, maxStudent, date });
+    const newLesson = new Lesson({ professorId, description, duration, subject, classe, maxStudent, date, registeredStudents });
 
     newLesson.save()
         .then(() => res.json('Lesson added!'))
@@ -46,6 +47,7 @@ router.route('/update/:id').post((req, res) => {
             lesson.classe = req.body.classe;
             lesson.maxStudent = req.body.maxStudent;
             lesson.date = Date.parse(req.body.date);
+            lesson.registeredStudents = req.body.registeredStudents;
 
             lesson.save()
                 .then(() => res.json('Lesson updated!'))
