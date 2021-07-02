@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
+import { useSelector } from 'react-redux';
 import changeDate from '../components/change-date';
 import changeDuration from '../components/change-duration';
+import register from '../components/register';
 
 Modal.setAppElement('#root')
 
 export default function Calendar() {
+    const user = useSelector(state => state.user.userInfo)
     const [lessons, setLessons] = useState([]);
     const [professors, setProfessors] = useState([]);
     const [open, isOpen] = useState(false);
@@ -41,9 +44,7 @@ export default function Calendar() {
         }
     }
 
-    // function register() {
-    //     return <button onClick={() => {}}></button>
-    // }
+    let registerButton = <button onClick={() => { register(selectedLesson, user._id) }}>S'inscrire</button>
 
     return (
         <div>
@@ -71,9 +72,10 @@ export default function Calendar() {
                             })}</div>
                                 <div>Classe : {lesson.classe}</div>
                                 <div>Durée : {changeDuration(lesson.duration)}</div>
-                                <div>Elèves inscrits : 0/{lesson.maxStudent}</div>
+                                <div>Elèves inscrits : {lesson.registeredStudents.length}/{lesson.maxStudent}</div>
                                 <div>Leçon prévue le {changeDate(lesson.date)}</div>
                                 <p>Contenu de la leçon : {lesson.description}</p>
+                                {user.role === "Student" || user.role === "Admin" ? registerButton : ''}
                                 <div className="creationDate">Créé le {changeDate(lesson.createdAt)}</div>
                             </div>
                         </div>
