@@ -30,7 +30,7 @@ export default function MyLessons() {
 
     const professor = (
         <div>
-            <table class="table">
+            <table className="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -46,16 +46,16 @@ export default function MyLessons() {
                     {lessons.map(lesson => {
                         if (lesson.professorId === user._id) {
                             lessonNumber = lessonNumber + 1
-                            return <tr>
+                            return <tr key={lesson._id}>
                                 <th>{lessonNumber}</th>
                                 <td>Leçon du {changeDate(lesson.date)}</td>
                                 <td>{changeDuration(lesson.duration)}</td>
                                 <td>{lesson.classe}</td>
-                                <td>0/{lesson.maxStudent}</td>
+                                <td>{lesson.registeredStudents.length}/{lesson.maxStudent}</td>
                                 <td><AiFillEdit className='clickable' onClick={() => `${isEditOpen(true)} ${setSelectedLesson(lesson._id)}`} /></td>
                                 <td><AiFillDelete className='clickable' onClick={() => { deleteLesson(lesson._id) }} /></td>
                             </tr>
-                        } else return ''
+                        } else return console.log("")
                     })}
                 </tbody>
             </table>
