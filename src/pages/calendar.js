@@ -44,7 +44,8 @@ export default function Calendar() {
         }
     }
 
-    let registerButton = <button onClick={() => { register(selectedLesson, user._id) }}>S'inscrire</button>
+
+    let registerButton = <button onClick={() => { register(selectedLesson, user._id); window.location.reload() }}>S'inscrire</button>
 
     return (
         <div>
