@@ -37,6 +37,25 @@ router.route('/:id').delete((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/update/:id').post((req, res, next) => needsRole(req, res, next, ['Admin', 'Professor']), (req, res) => {
+    Lesson.findById(req.params.id)
+        .then(lesson => {
+            lesson.professorId = req.body.professorId;
+            lesson.description = req.body.description;
+            lesson.duration = Number(req.body.duration);
+            lesson.subject = req.body.subject;
+            lesson.classe = req.body.classe;
+            lesson.maxStudent = req.body.maxStudent;
+            lesson.date = Date.parse(req.body.date);
+            lesson.registeredStudents = req.body.registeredStudents;
+
+            lesson.save()
+                .then(() => res.json('Lesson updated!'))
+                .catch(err => res.status(400).json('Error: ' + err));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/update/:id').put((req, res) => {
     Lesson.findById(req.params.id)
         .then(lesson => {
