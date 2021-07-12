@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import changeDate from '../components/change-date';
 import changeDuration from '../components/change-duration';
+import GetRegisteredStudentsNames from '../components/getRegisteredStudentsNames';
 import axios from 'axios';
 import Modal from 'react-modal';
 import EditLessons from './edit-lesson';
@@ -26,7 +27,10 @@ export default function MyLessons() {
     function deleteLesson(lessonId) {
         axios.delete(`http://localhost:5000/api/lessons/${lessonId}`)
             .then(res => console.log(res.data));
+        window.location.reload()
     }
+
+    if (!user) return null
 
     const professor = (
         <div>
@@ -51,7 +55,11 @@ export default function MyLessons() {
                                 <td>Leçon du {changeDate(lesson.date)}</td>
                                 <td>{changeDuration(lesson.duration)}</td>
                                 <td>{lesson.classe}</td>
-                                <td>{lesson.registeredStudents.length}/{lesson.maxStudent}</td>
+                                <td>
+                                    <ul>{lesson.registeredStudents.length}/{lesson.maxStudent}
+                                        <GetRegisteredStudentsNames registeredStudents={lesson.registeredStudents} />
+                                    </ul>
+                                </td>
                                 <td><AiFillEdit className='clickable' onClick={() => `${isEditOpen(true)} ${setSelectedLesson(lesson._id)}`} /></td>
                                 <td><AiFillDelete className='clickable' onClick={() => { deleteLesson(lesson._id) }} /></td>
                             </tr>
@@ -79,7 +87,6 @@ export default function MyLessons() {
             </Modal>
         </div >
     )
-
 
     return (
         <div>
