@@ -52,7 +52,7 @@ export default function EditLessons(props) {
             date: date,
             registeredStudents: registeredStudents
         };
-        axios.post(`http://localhost:5000/api/lessons/update/${lessonId}`, lesson)
+        axios.post(`http://localhost:5000/api/lessons/update/${lessonId}`, lesson, { withCredentials: true })
             .then(res => console.log(res.data));
     }
 
@@ -104,6 +104,7 @@ export default function EditLessons(props) {
                         />
                     </div>
                 </div>
+                {/* <button type="button" onClick={() => console.log([...registeredStudents, "60b890873cc8c72b88e323e5"])}>user</button> */}
                 <div className="form-group">
                     <input type="submit" value="Editer" className="btn btn-primary" />
                 </div>
