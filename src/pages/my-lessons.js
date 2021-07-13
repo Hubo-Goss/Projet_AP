@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import changeDate from '../components/change-date';
 import changeDuration from '../components/change-duration';
-import GetRegisteredStudentsNames from '../components/getRegisteredStudentsNames';
+import GetRegisteredStudentsName from '../components/getRegisteredStudentsName';
 import axios from 'axios';
 import Modal from 'react-modal';
 import EditLessons from './edit-lesson';
@@ -57,7 +57,7 @@ export default function MyLessons() {
                                 <td>{lesson.classe}</td>
                                 <td>
                                     <ul>{lesson.registeredStudents.length}/{lesson.maxStudent}
-                                        <GetRegisteredStudentsNames registeredStudents={lesson.registeredStudents} />
+                                        <GetRegisteredStudentsName registeredStudents={lesson.registeredStudents} />
                                     </ul>
                                 </td>
                                 <td><AiFillEdit className='clickable' onClick={() => `${isEditOpen(true)} ${setSelectedLesson(lesson._id)}`} /></td>
