@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 
-export default function GetRegisteredStudentsNames(props) {
+export default function GetRegisteredStudentsName(props) {
     const registeredStudents = (props.registeredStudents)
     const [registeredStudentsName, setRegisteredStudentsName] = useState([]);
     let name = []
