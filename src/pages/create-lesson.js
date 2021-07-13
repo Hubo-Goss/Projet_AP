@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import ClassesList from '../components/classes-list';
 import SubjectsList from '../components/subjects-list';
+import FrenchDatePicker from '../components/french-date-picker';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import { useSelector } from "react-redux"
 
 
 export default function CreateLesson() {
-    const user = useSelector(state => state.user)
+    const user = useSelector(state => state.user.userInfo)
 
-    const professorId = (user.userInfo._id);
     const [description, setDescription] = useState('');
     const [duration, setDuration] = useState('');
     const [subject, setSubject] = useState('');
@@ -24,6 +23,8 @@ export default function CreateLesson() {
     const [snackbarText, setSnackbarText] = useState('Lesson created!');
     const registeredStudents = [];
 
+    if (!user) return null
+    const professorId = (user._id);
 
     function onChangeDescription(e) {
         setDescription(e.target.value);
@@ -91,7 +92,7 @@ export default function CreateLesson() {
     }
 
     return (
-        <div>
+        <div className="box">
             <h3>Créer une séance d'AP</h3>
             <form onSubmit={onSubmit}>
                 <div className="form-group">
@@ -99,22 +100,17 @@ export default function CreateLesson() {
                     <SubjectsList onChange={onChangeSubject} subject='Sélectionnez une matière' />
                 </div>
                 <div className="form-group">
-                    <label>Description : </label>
-                    <input type="text"
-                        required
-                        className="form-control"
-                        value={description}
-                        onChange={onChangeDescription}
-                    />
-                </div>
-                <div className="form-group">
                     <label>Durée de l'AP : </label>
-                    <input
-                        type="text"
+                    <select
                         className="form-control"
                         value={duration}
-                        onChange={onChangeDuration}
-                    />
+                        onChange={onChangeDuration}>
+                        <option value="DEFAULT" hidden>Choisissez une durée</option>
+                        <option value="30">0 H 30</option>
+                        <option value="60">1 H 00</option>
+                        <option value="90">1 H 30</option>
+                        <option value="120">2 H 00</option>
+                    </select>
                 </div>
                 <div className="form-group">
                     <label>Classe(s) : </label>
@@ -130,16 +126,27 @@ export default function CreateLesson() {
                     />
                 </div>
                 <div className="form-group">
+                    <label>Description : </label>
+                    <textarea type="text"
+                        id="noResize"
+                        required
+                        className="form-control"
+                        value={description}
+                        onChange={onChangeDescription}
+                        rows="5"
+                        placeholder="Décrivez ce que vous allez voir pendant l'AP"
+                    />
+                </div>
+                <div className="form-group">
                     <label>Date: </label>
                     <div>
-                        <DatePicker selected={date} onChange={onChangeDate} />
+                        <FrenchDatePicker date={date} onChange={onChangeDate} />
                     </div>
                 </div>
                 <div className="form-group">
                     <input type="submit" value="Créer la séance" className="btn btn-primary" />
                 </div>
             </form>
-            <button onClick={(req, res) => console.log(`${user.userInfo.firstName} ${user.userInfo.lastName}`)}>user</button>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity={snackbarSeverity}>
                     {snackbarText}
