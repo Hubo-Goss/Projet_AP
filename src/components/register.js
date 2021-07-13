@@ -14,6 +14,8 @@ export default function register(lessonId, userId) {
                     };
                     axios.put(`http://localhost:5000/api/lessons/update/${lessonId}`, lesson)
                         .then(res => console.log(res.data));
+
+                    window.location.reload()
                 }
             } else { return console.log('Maximum number of students reached') }
         });
