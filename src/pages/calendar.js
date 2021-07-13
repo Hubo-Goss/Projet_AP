@@ -44,23 +44,27 @@ export default function Calendar() {
         }
     }
 
+    if (!user) return null
 
-    let registerButton = <button onClick={() => { register(selectedLesson, user._id); window.location.reload() }}>S'inscrire</button>
+    let registerButton = <button onClick={() => { register(selectedLesson, user._id) }}>S'inscrire</button>
 
     return (
         <div>
             <p>Vous êtes sur la page des AP, voici les leçons disponibles :</p>
             <div>{lessons.map(lesson => {
-                return <div className={`${lessonDisplaySize(lesson.duration)} ${lesson.subject}`} onClick={() => (`${isOpen(true)} ${setSelectedLesson(lesson._id)} ${setCorrespondingProfessor(lesson.professorId)}`)} key={lesson._id}>
-                    <div className={"subjectSmallFormat"}>{lesson.subject}</div>
-                    <span className="professorNameSmallFormat">{professors.map(professor => {
-                        if (lesson.professorId === professor._id) {
-                            return <div key={professor._id}>{professor.firstName + ' ' + professor.lastName}</div>
-                        } else return ' '
-                    })}</span>
-                    <span className="creationDateSmallFormat">Créé le {changeDate(lesson.createdAt)}</span>
-                </div>
-            })}</div>
+                if (lesson.classe === user.classe || user.role === "Admin" || user.role === "Professor") {
+                    return <div className={`${lessonDisplaySize(lesson.duration)} ${lesson.subject}`} onClick={() => (`${isOpen(true)} ${setSelectedLesson(lesson._id)} ${setCorrespondingProfessor(lesson.professorId)}`)} key={lesson._id}>
+                        <div className={"subjectSmallFormat"}>{lesson.subject}</div>
+                        <span className="professorNameSmallFormat">{professors.map(professor => {
+                            if (lesson.professorId === professor._id) {
+                                return <div key={professor._id}>{professor.firstName + ' ' + professor.lastName}</div>
+                            } else return ' '
+                        })}</span>
+                        <span className="creationDateSmallFormat">Créé le {changeDate(lesson.createdAt)}</span>
+                    </div>
+                } else return ''
+            }
+            )}</div>
             <Modal isOpen={open} className="modalContent" overlayClassName="modalOverlay" onRequestClose={() => isOpen(false)}>
                 <div>{lessons.map(lesson => {
                     if (selectedLesson === lesson._id) {
