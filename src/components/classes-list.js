@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export default function ClassesList(props) {
-    const [classe, setClasse] = useState(props.classe || '');
+    const [classe, setClasse] = useState(props.classe || 'DEFAULT');
     const [classes, setClasses] = useState([]);
 
     useEffect(() => {
@@ -26,6 +26,7 @@ export default function ClassesList(props) {
             className="form-control"
             value={classe}
             onChange={onChangeClasse}>
+            <option value="DEFAULT" hidden>Choisissez une classe</option>
             {
                 classes.map(classe => {
                     return <option

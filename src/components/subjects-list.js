@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export default function SubjectsList(props) {
-    const [subject, setSubject] = useState(props.subject || '');
+    const [subject, setSubject] = useState(props.subject || 'DEFAULT');
     const [subjects, setSubjects] = useState([]);
 
     useEffect(() => {
@@ -26,6 +26,7 @@ export default function SubjectsList(props) {
             className="form-control"
             value={subject}
             onChange={onChangeSubject}>
+            <option value="DEFAULT" hidden>Choisissez une matière</option>
             {
                 subjects.map(subject => {
                     return <option
