@@ -32,6 +32,40 @@ export default function MyLessons() {
 
     if (!user) return null
 
+    const student = (
+        <div>
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Durée</th>
+                        <th scope="col">Matière</th>
+                        <th scope="col">Classe</th>
+                        <th scope="col">Elèves inscrits</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {lessons.map(lesson => {
+                        if (lesson.registeredStudents.find(studentId => studentId === user._id)) {
+                            lessonNumber = lessonNumber + 1
+                            return <tr key={lesson._id}>
+                                <th>{lessonNumber}</th>
+                                <td>Leçon du {changeDate(lesson.date)}</td>
+                                <td>{changeDuration(lesson.duration)}</td>
+                                <td>{lesson.subject}</td>
+                                <td>{lesson.classe}</td>
+                                <td>{lesson.registeredStudents.length}/{lesson.maxStudent}</td>
+                                <td>{lesson.description}</td>
+                            </tr>
+                        } else return console.log("")
+                    })}
+                </tbody>
+            </table>
+        </div >
+    )
+
     const professor = (
         <div>
             <table className="table">
@@ -90,7 +124,7 @@ export default function MyLessons() {
 
     return (
         <div>
-            {user.role === 'Professor' || user.role === 'Admin' ? professor : ''}
+            {user.role === 'Professor' || user.role === 'Admin' ? professor : student}
         </div>
     )
 }
