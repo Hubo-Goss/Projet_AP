@@ -1,3 +1,4 @@
+/*#region General */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,7 +12,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/*#endregion General */
 
+/*#region Calendar */
+  /*#region Lesson (inside the modal) */
 .subject {
   text-align: center;
   font-size: 24px;
@@ -22,17 +26,14 @@ code {
   font-size: 11px;
   text-align: end;
 }
-
+  /*#endregion Lesson (inside the modal) */
+  /*#region Lesson smallFormat (outside the modal) */
 .lessonSmallFormat {
   width: 175px;
   border: 1px solid black;
   cursor: pointer;
   margin: 10px 10px 10px 10px;
   display: inline-block;
-}
-
-.lessonSmallFormat:hover {
-  background-color: rgba(255, 255, 255, 0.301)transparent;
 }
 
 .subjectSmallFormat {
@@ -47,65 +48,8 @@ code {
   padding-top: 10px;
   padding-bottom: 0;
 }
-
-/*#region couleursMatières*/
-.Histoire{
-  background-color: green;
-}
-
-.lessonSmallFormat.Histoire:hover{
-  background-color: rgba(0, 128, 0, 0.75);
-}
-
-.Géométrie{
-  background-color: purple;
-}
-
-.lessonSmallFormat.Géométrie:hover{
-  background-color: rgba(128, 0, 128, 0.75);
-}
-
-.Allemand{
-  background-color: red;
-}
-
-.lessonSmallFormat.Allemand:hover{
-  background-color: rgba(255, 0, 0, 0.75);
-}
-
-.Français{
-  background-color: blue;
-}
-
-.lessonSmallFormat.Français:hover{
-  background-color: rgba(0, 0, 255, 0.75);
-}
-
-.Anglais{
-  background-color: pink;
-}
-
-.lessonSmallFormat.Anglais:hover{
-  background-color: rgba(255, 192, 203, 0.75);
-}
-
-.Géographie{
-  background-color: lightblue;
-}
-
-.lessonSmallFormat.Géographie:hover{
-  background-color: rgba(173, 216, 230, 0.75);
-}
-
-.Mathématiques{
-  background-color: yellow;
-}
-
-.lessonSmallFormat.Mathématiques:hover{
-  background-color: rgba(255, 255, 0, 0.50);
-}
-/*#endregion*/
-
+  /*#endregion Lesson smallFormat */
+  /*#region Lesson Sizes */
 .thirtyminutesSize {
   height: 50px;
 }
@@ -121,7 +65,72 @@ code {
 .twoHoursSize {
   height: 125px;
 }
+  /*#endregion Les Sizes */
+  /*#region couleursMatières*/
+  .Histoire{
+    background-color: green;
+  }
+  
+  .lessonSmallFormat.Histoire:hover{
+    background-color: rgba(0, 128, 0, 0.75);
+  }
+  
+  .Géométrie{
+    background-color: purple;
+  }
+  
+  .lessonSmallFormat.Géométrie:hover{
+    background-color: rgba(128, 0, 128, 0.75);
+  }
+  
+  .Allemand{
+    background-color: red;
+  }
+  
+  .lessonSmallFormat.Allemand:hover{
+    background-color: rgba(255, 0, 0, 0.75);
+  }
+  
+  .Français{
+    background-color: blue;
+  }
+  
+  .lessonSmallFormat.Français:hover{
+    background-color: rgba(0, 0, 255, 0.75);
+  }
+  
+  .Anglais{
+    background-color: pink;
+  }
+  
+  .lessonSmallFormat.Anglais:hover{
+    background-color: rgba(255, 192, 203, 0.75);
+  }
+  
+  .Géographie{
+    background-color: lightblue;
+  }
+  
+  .lessonSmallFormat.Géographie:hover{
+    background-color: rgba(173, 216, 230, 0.75);
+  }
+  
+  .Mathématiques{
+    background-color: yellow;
+  }
+  
+  .lessonSmallFormat.Mathématiques:hover{
+    background-color: rgba(255, 255, 0, 0.50);
+  }
+  /*#endregion*/
 
+  /*Filter*/
+.smallSelect {
+  width: 150px;
+}
+/*#endregion Calendar */
+
+/*#region Modal*/
 .modalOverlay {
   position: fixed;
   inset: 0px;
@@ -157,11 +166,15 @@ code {
   text-decoration: none;
   cursor: pointer;
 }
+/*#endregion Modal*/
 
+/*#region My Lessons */
 .clickable {
   cursor: pointer
 }
+/*#endregion My Lessons */
 
+/*#region Create Lesson */
 .box {
   width: 33%;
   text-align: center;
@@ -171,3 +184,4 @@ code {
 #noResize {
   resize: none;
 }
+/*#endregion Create Lesson */

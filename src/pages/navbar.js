@@ -6,10 +6,12 @@ import { logout } from '../redux/actions/userActions';
 export default function Navbar() {
     const dispatch = useDispatch()
 
+    //Permet de se déconnecter
     function handleLogout() {
         dispatch(logout())
     }
 
+    //Va chercher les infos du user et les save dans user
     const user = useSelector(state => state.user.userInfo)
 
     const createLesson = (

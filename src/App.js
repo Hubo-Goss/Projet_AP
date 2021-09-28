@@ -15,6 +15,7 @@ import MyLessons from "./pages/my-lessons";
 function App() {
   const dispatch = useDispatch()
 
+  //
   useEffect(() => {
     console.log("useEffect de App.js")
     dispatch(checkLoggedIn())

@@ -1,14 +1,16 @@
-import { SET_CURRENT_STORE, REMOVE_CURRENT_STORE } from "../actions/storeActions";
+// /!\ PAS UTILE POUR LE MOMENT /!\
 
-const initialState = { currentStore: null };
-export default function storeReducer(state = initialState, action) {
-    switch (action.type) {
-        case SET_CURRENT_STORE:
-            return { currentStore: action.payload.store };
-        case REMOVE_CURRENT_STORE:
-            return { currentStore: null };
+// import { SET_CURRENT_STORE, REMOVE_CURRENT_STORE } from "../actions/storeActions";
 
-        default:
-            return state;
-    }
-}
+// const initialState = { currentStore: null };
+// export default function storeReducer(state = initialState, action) {
+//     switch (action.type) {
+//         case SET_CURRENT_STORE:
+//             return { currentStore: action.payload.store };
+//         case REMOVE_CURRENT_STORE:
+//             return { currentStore: null };
+
+//         default:
+//             return state;
+//     }
+// }

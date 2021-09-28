@@ -1,5 +1,6 @@
 import { LOGIN_USER, LOGOUT_USER } from "../actions/userActions";
 
+//Permet d'utiliser les fonctions de userActions.js
 const initialState = { userInfo: null };
 export default function userReducer(state = initialState, action) {
     switch (action.type) {

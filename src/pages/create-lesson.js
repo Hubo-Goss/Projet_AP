@@ -97,7 +97,7 @@ export default function CreateLesson() {
             <form onSubmit={onSubmit}>
                 <div className="form-group">
                     <label>Matière : </label>
-                    <SubjectsList onChange={onChangeSubject} subject='Sélectionnez une matière' />
+                    <SubjectsList onChange={onChangeSubject} subject='Sélectionnez une matière' props="defaultHidden" />
                 </div>
                 <div className="form-group">
                     <label>Durée de l'AP : </label>
