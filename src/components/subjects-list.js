@@ -21,20 +21,40 @@ export default function SubjectsList(props) {
         props.onChange(e.target.value);
     }
 
-    return (
-        <select required
-            className="form-control"
-            value={subject}
-            onChange={onChangeSubject}>
-            <option value="DEFAULT" hidden>Choisissez une matière</option>
-            {
-                subjects.map(subject => {
-                    return <option
-                        key={subject}
-                        value={subject}>{subject}
-                    </option>;
-                })
-            }
-        </select>
-    )
+
+    if (props.props === "defaultHidden") {
+        return (
+            <select required
+                className="form-control"
+                value={subject}
+                onChange={onChangeSubject}>
+                <option value="DEFAULT" hidden>Choisissez une matière</option>
+                {
+                    subjects.map(subject => {
+                        return <option
+                            key={subject}
+                            value={subject}>{subject}
+                        </option>;
+                    })
+                }
+            </select>
+        )
+    } else {
+        return (
+            <select required
+                className="form-control"
+                value={subject}
+                onChange={onChangeSubject}>
+                <option value="DEFAULT">Pas de filtre</option>
+                {
+                    subjects.map(subject => {
+                        return <option
+                            key={subject}
+                            value={subject}>{subject}
+                        </option>;
+                    })
+                }
+            </select>
+        )
+    }
 }
