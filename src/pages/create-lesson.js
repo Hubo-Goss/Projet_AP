@@ -3,7 +3,8 @@ import axios from 'axios';
 import "react-datepicker/dist/react-datepicker.css";
 import ClassesList from '../components/classes-list';
 import SubjectsList from '../components/subjects-list';
-import FrenchDatePicker from '../components/french-date-picker';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import fr from 'date-fns/locale/fr';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import { useSelector } from "react-redux"
@@ -22,6 +23,8 @@ export default function CreateLesson() {
     const [snackbarSeverity, setSnackbarSeverity] = useState('success');
     const [snackbarText, setSnackbarText] = useState('Lesson created!');
     const registeredStudents = [];
+
+    registerLocale('fr', fr)
 
     if (!user) return null
     const professorId = (user._id);
@@ -140,7 +143,7 @@ export default function CreateLesson() {
                 <div className="form-group">
                     <label>Date: </label>
                     <div>
-                        <FrenchDatePicker date={date} onChange={onChangeDate} />
+                        <DatePicker selected={date} onChange={onChangeDate} locale='fr' inline />
                     </div>
                 </div>
                 <div className="form-group">
