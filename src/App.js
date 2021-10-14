@@ -17,7 +17,6 @@ function App() {
 
   //
   useEffect(() => {
-    console.log("useEffect de App.js")
     dispatch(checkLoggedIn())
   }, []);
 
