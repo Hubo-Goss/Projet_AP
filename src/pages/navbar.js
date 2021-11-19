@@ -26,6 +26,12 @@ export default function Navbar() {
         </li>
     )
 
+    const subjectsManager = (
+        <li className="navbar-item">
+            <Link to="/subjects_manager" className="nav-link">Gérer les matières</Link>
+        </li>
+    )
+
     return (
         <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
             <Link to="/calendar" className="navbar-brand">Calendrier</Link>
@@ -33,8 +39,9 @@ export default function Navbar() {
                 <ul className="navbar-nav mr-auto">
                     {user.role === 'Professor' || user.role === 'Admin' ? createLesson : ''}
                     {user.role === 'Admin' ? createUser : ''}
+                    {user.role === 'Admin' ? subjectsManager : ''}
                     <li className="navbar-item">
-                        <Link to="/my-lessons" className="nav-link">Mes leçons</Link>
+                        <Link to="/my_lessons" className="nav-link">Mes leçons</Link>
                     </li>
                     <li className="navbar-item">
                         <Link to="/" className="nav-link" onClick={() => handleLogout()}>Logout</Link>
