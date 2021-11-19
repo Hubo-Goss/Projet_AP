@@ -3,9 +3,13 @@ import axios from 'axios';
 import "react-datepicker/dist/react-datepicker.css";
 import ClassesList from '../components/classes-list';
 import SubjectsList from '../components/subjects-list';
+import changeDate from '../components/change-date';
+import getHour from '../components/get-hour';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import fr from 'date-fns/locale/fr';
 import Snackbar from '@material-ui/core/Snackbar';
+import Button from "react-bootstrap/button";
+import CloseButton from "react-bootstrap/closebutton";
 import Alert from '@material-ui/lab/Alert';
 import { useSelector } from "react-redux"
 
@@ -18,7 +22,8 @@ export default function CreateLesson() {
     const [subject, setSubject] = useState('');
     const [classe, setClasse] = useState('');
     const [maxStudent, setMaxStudent] = useState('');
-    const [date, setDate] = useState(new Date());
+    const [dateToAdd, setDateToAdd] = useState(new Date());
+    const [dates, setDates] = useState([]);
     const [open, setOpen] = useState(false);
     const [snackbarSeverity, setSnackbarSeverity] = useState('success');
     const [snackbarText, setSnackbarText] = useState('Lesson created!');
@@ -54,9 +59,35 @@ export default function CreateLesson() {
         console.log(e.target.value)
     }
 
-    function onChangeDate(date) {
-        setDate(date);
+    function onChangeDateToAdd(date) {
+        setDateToAdd(date);
         console.log(date)
+    }
+
+    function addDate() {
+        setDates([...dates, new Date(dateToAdd)])
+    }
+
+    function sortArray() {
+        function compare(a, b) {
+            if (a < b) {
+                return -1;
+            }
+            if (a > b) {
+                return 1;
+            }
+            return 0;
+        }
+
+        dates.sort(compare)
+    }
+
+    function removeDate(date) {
+        console.log(dates)
+        dates.splice(dates.indexOf(date), 1)
+        setDates(dates)
+        console.log(dates)
+        document.getElementById('datesList').removeChild(document.getElementById(`${changeDate(date.toISOString()).props.children} ${getHour(date)}`))
     }
 
     function handleClose() {
@@ -66,32 +97,34 @@ export default function CreateLesson() {
     function changeSnackbar(severity) {
         setSnackbarSeverity(severity)
         if (severity === "error")
-            setSnackbarText("Unauthorized access.")
+            setSnackbarText("Accès non autorisé.")
         else
-            setSnackbarText("Lesson created!")
+            setSnackbarText("Leçon(s) créée(s)!")
     }
 
     function onSubmit(e) {
         e.preventDefault();
-        const lesson = {
-            professorId: professorId,
-            description: description,
-            duration: duration,
-            subject: subject,
-            classe: classe,
-            maxStudent: maxStudent,
-            date: date,
-            registeredStudents: registeredStudents
-        };
-        axios.post('http://localhost:5000/api/lessons/add', lesson, { withCredentials: true })
-            .then(res => {
-                console.log(res.data)
-                if (res.data === "Unauthorized")
-                    changeSnackbar("error")
-                else
-                    changeSnackbar("success")
-                setOpen(true)
-            });
+        dates.forEach(date => {
+            const lesson = {
+                professorId: professorId,
+                description: description,
+                duration: duration,
+                subject: subject,
+                classe: classe,
+                maxStudent: maxStudent,
+                date: date,
+                registeredStudents: registeredStudents
+            };
+            axios.post('http://localhost:5000/api/lessons/add', lesson, { withCredentials: true })
+                .then(res => {
+                    console.log(res.data)
+                    if (res.data === "Unauthorized")
+                        changeSnackbar("error")
+                    else
+                        changeSnackbar("success")
+                    setOpen(true)
+                });
+        })
     }
 
     return (
@@ -109,7 +142,6 @@ export default function CreateLesson() {
                         value={duration}
                         onChange={onChangeDuration}>
                         <option value="DEFAULT" hidden>Choisissez une durée</option>
-                        <option value="30">0 H 30</option>
                         <option value="60">1 H 00</option>
                         <option value="90">1 H 30</option>
                         <option value="120">2 H 00</option>
@@ -141,9 +173,26 @@ export default function CreateLesson() {
                     />
                 </div>
                 <div className="form-group">
-                    <label>Date: </label>
+                    <label>Date(s) : </label>
                     <div>
-                        <DatePicker selected={date} onChange={onChangeDate} locale='fr' inline />
+                        <DatePicker selected={dateToAdd} onChange={onChangeDateToAdd} showTimeInput locale='fr' inline />
+                        <Button type="button" className="btn btn-light" onClick={addDate}>Ajouter</Button>
+                        <ul id="datesList" className="list-group container">
+                            {sortArray()}
+                            {console.log(dates)}
+                            {dates.map(date => {
+                                return <li
+                                    id={`${changeDate(date.toISOString()).props.children} ${getHour(date)}`}
+                                    className="li row"
+                                    key={`${changeDate(date.toISOString()).props.children} ${getHour(date)}`}>
+                                    <span className="col-10">
+                                        <span>{changeDate(date.toISOString())}</span>
+                                        <span> à {getHour(date)}</span>
+                                    </span>
+                                    <CloseButton className="col-2" onClick={() => { removeDate(date) }} />
+                                </li>
+                            })}
+                        </ul>
                     </div>
                 </div>
                 <div className="form-group">
