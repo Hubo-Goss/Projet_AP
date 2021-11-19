@@ -4,9 +4,9 @@ import React, { useState, useEffect } from 'react'
 export default function GetRegisteredStudentsName(props) {
     const registeredStudents = (props.registeredStudents)
     const [registeredStudentsName, setRegisteredStudentsName] = useState([]);
-    let name = []
 
     useEffect(() => {
+        let name = []
         registeredStudents.forEach(element => {
             axios.get(`http://localhost:5000/api/users/${element}`)
                 .then(response => {
@@ -17,7 +17,8 @@ export default function GetRegisteredStudentsName(props) {
                     console.log(error);
                 });
         });
-    }, [])
+        // console.log(registeredStudentsName)
+    }, [registeredStudents])
 
     return (
         <div>
