@@ -14,6 +14,7 @@ export default function MyLessons() {
     let lessonNumber = 0
     const [openEdit, isEditOpen] = useState(false);
     const [selectedLesson, setSelectedLesson] = useState('');
+
     useEffect(() => {
         axios.get('http://localhost:5000/api/lessons/')
             .then(response => {
@@ -23,6 +24,18 @@ export default function MyLessons() {
                 console.log(error);
             });
     }, []);
+
+    function compare(a, b) {
+        if (a.date < b.date) {
+            return 1;
+        }
+        if (a.date > b.date) {
+            return -1;
+        }
+        return 0;
+    }
+
+    lessons.sort(compare)
 
     function deleteLesson(lessonId) {
         axios.delete(`http://localhost:5000/api/lessons/${lessonId}`)
@@ -59,7 +72,7 @@ export default function MyLessons() {
                                 <td>{lesson.registeredStudents.length}/{lesson.maxStudent}</td>
                                 <td>{lesson.description}</td>
                             </tr>
-                        } else return console.log("")
+                        } else return null
                     })}
                 </tbody>
             </table>
@@ -84,7 +97,7 @@ export default function MyLessons() {
                     {lessons.map(lesson => {
                         if (lesson.professorId === user._id) {
                             lessonNumber = lessonNumber + 1
-                            return <tr key={lesson._id}>
+                            return <tr key={lesson._id} className={new Date(lesson.date) < new Date() ? 'greyLesson' : ''}>
                                 <th>{lessonNumber}</th>
                                 <td>Leçon du {changeDate(lesson.date)}</td>
                                 <td>{changeDuration(lesson.duration)}</td>
@@ -97,7 +110,7 @@ export default function MyLessons() {
                                 <td><AiFillEdit className='clickable' onClick={() => `${isEditOpen(true)} ${setSelectedLesson(lesson._id)}`} /></td>
                                 <td><AiFillDelete className='clickable' onClick={() => { deleteLesson(lesson._id) }} /></td>
                             </tr>
-                        } else return console.log("")
+                        } else return null
                     })}
                 </tbody>
             </table>

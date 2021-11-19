@@ -21,6 +21,17 @@ export default function SubjectsList(props) {
         props.onChange(e.target.value);
     }
 
+    function compare(a, b) {
+        if (a < b) {
+            return -1;
+        }
+        if (a > b) {
+            return 1;
+        }
+        return 0;
+    }
+
+    subjects.sort(compare)
 
     if (props.props === "defaultHidden") {
         return (
