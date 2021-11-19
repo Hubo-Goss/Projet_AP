@@ -27,112 +27,31 @@ code {
   text-align: end;
 }
   /*#endregion Lesson (inside the modal) */
-  /*#region Lesson smallFormat (outside the modal) */
-.lessonSmallFormat {
-  width: 175px;
-  border: 1px solid black;
-  cursor: pointer;
-  margin: 10px 10px 10px 10px;
-  display: inline-block;
-}
-
-.subjectSmallFormat {
+  /*#region LessonInfo (when an event is clicked) */
+#lessonInfo {
+  position:absolute;
+  margin-left: auto;
+  margin-right: auto;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  z-index: 1;
   text-align: center;
-  font-size: 18px;
-  border-bottom: 1px solid black
+  background: pink;
+  overflow: auto;
+  border-radius: 10px;
+  outline: none;
+  padding: 20px;
+  border: 1px solid rgb(0, 0, 0, 0.40);
+  width: 300px;
+  box-shadow: 7px 7px 12px 0px rgba(110,110,110,0.75);
 }
-
-.creationDateSmallFormat {
-  font-size: 10px;
-  float: right;
-  padding-top: 10px;
-  padding-bottom: 0;
-}
-  /*#endregion Lesson smallFormat */
-  /*#region Lesson Sizes */
-.thirtyminutesSize {
-  height: 50px;
-}
-
-.oneHourSize {
-  height: 75px;
-}
-
-.oneAndHalfHourSize {
-  height: 100px;
-}
-
-.twoHoursSize {
-  height: 125px;
-}
-  /*#endregion Les Sizes */
-  /*#region couleursMatières*/
-  .Histoire{
-    background-color: green;
-  }
-  
-  .lessonSmallFormat.Histoire:hover{
-    background-color: rgba(0, 128, 0, 0.75);
-  }
-  
-  .Géométrie{
-    background-color: purple;
-  }
-  
-  .lessonSmallFormat.Géométrie:hover{
-    background-color: rgba(128, 0, 128, 0.75);
-  }
-  
-  .Allemand{
-    background-color: red;
-  }
-  
-  .lessonSmallFormat.Allemand:hover{
-    background-color: rgba(255, 0, 0, 0.75);
-  }
-  
-  .Français{
-    background-color: blue;
-  }
-  
-  .lessonSmallFormat.Français:hover{
-    background-color: rgba(0, 0, 255, 0.75);
-  }
-  
-  .Anglais{
-    background-color: pink;
-  }
-  
-  .lessonSmallFormat.Anglais:hover{
-    background-color: rgba(255, 192, 203, 0.75);
-  }
-  
-  .Géographie{
-    background-color: lightblue;
-  }
-  
-  .lessonSmallFormat.Géographie:hover{
-    background-color: rgba(173, 216, 230, 0.75);
-  }
-  
-  .Mathématiques{
-    background-color: yellow;
-  }
-  
-  .lessonSmallFormat.Mathématiques:hover{
-    background-color: rgba(255, 255, 0, 0.50);
-  }
-  /*#endregion*/
-
-  /*Filter*/
-.smallSelect {
-  width: 150px;
-}
+/*#endregion LessonInfo (when an event is clicked) */
 /*#endregion Calendar */
 
 /*#region Modal*/
 .modalOverlay {
-  position: fixed;
+  position: absolute;
   inset: 0px;
   background-color: rgba(255, 255, 255, 0.5);
 }
@@ -146,7 +65,6 @@ code {
   outline: none;
   padding: 20px;
   border: 1px solid rgb(0, 0, 0, 0.40);
-  height: 400px;
   width: 300px;
   margin: auto;
   box-shadow: 7px 7px 12px 0px rgba(110,110,110,0.75);
@@ -168,12 +86,6 @@ code {
 }
 /*#endregion Modal*/
 
-/*#region My Lessons */
-.clickable {
-  cursor: pointer
-}
-/*#endregion My Lessons */
-
 /*#region Create Lesson */
 .box {
   width: 33%;
@@ -184,4 +96,44 @@ code {
 #noResize {
   resize: none;
 }
+
+#datesList {
+  width: 125px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+}
+
+.li {
+  position: relative;
+  display: block;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,.125);
+}
+
+.li:first-child {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
 /*#endregion Create Lesson */
+
+/*#region My Lessons */
+.clickable {
+  cursor: pointer
+}
+
+.greyLesson {
+  background-color: grey;
+}
+/*#endregion My Lessons */
+
+/*#region Subjects Manager */
+.subjectManagerBox{
+  width: 300px;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+}
+/*#endregion My Lessons */
+
