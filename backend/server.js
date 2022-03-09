@@ -10,11 +10,6 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
 
-
-//===============PROXY=================//
-
-
-
 //===============EXPRESS=================//
 const corsOptions = {
     origin: 'http://localhost:3000',
@@ -55,6 +50,7 @@ const subjectsRouter = require('./routes/subjects');
 const classesRouter = require('./routes/classes');
 const rolesRouter = require('./routes/roles');
 const professorsRouter = require('./routes/professors.js');
+const studentsRouter = require('./routes/students.js');
 
 app.use('/api/lessons', lessonsRouter);
 app.use('/api/users', usersRouter);
@@ -62,6 +58,7 @@ app.use('/api/subjects', subjectsRouter);
 app.use('/api/classes', classesRouter);
 app.use('/api/roles', rolesRouter);
 app.use('/api/professors', professorsRouter)
+app.use('/api/students', studentsRouter)
 
 
 //===============PORT=================//

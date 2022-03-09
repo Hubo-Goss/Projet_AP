@@ -8,7 +8,9 @@ import changeDate from '../components/change-date';
 import changeDuration from '../components/change-duration';
 import register from '../components/register';
 import changeBgColor from '../components/change-bg-color';
-// import { Tooltip } from 'bootstrap';
+import { FcCancel } from "react-icons/fc";
+import { FcOk } from "react-icons/fc";
+import { FcPlus } from "react-icons/fc";
 
 export default function Calendar() {
     const user = useSelector(state => state.user.userInfo)
@@ -25,7 +27,7 @@ export default function Calendar() {
         event.title = `${lesson.subject}`
         event.start = lesson.date
         event.end = new Date(new Date(lesson.date).setTime(new Date(lesson.date).getTime() + lesson.duration * 60 * 1000))
-        event.extendedProps = { _id: lesson._id, professorId: lesson.professorId, numberOfStudents: `${lesson.registeredStudents.length}/${lesson.maxStudent}` }
+        event.extendedProps = { lesson: lesson, _id: lesson._id, professorId: lesson.professorId, numberOfStudents: `${lesson.registeredStudents.length}/${lesson.maxStudent}` }
         return event
     })
 
@@ -48,6 +50,24 @@ export default function Calendar() {
     }, []);
 
     if (!user) return null
+
+    function GetStatus(lesson) {
+        // if student is already registered
+        if (lesson.registeredStudents.length !== 0) {
+            var index = lesson.registeredStudents.indexOf(user._id)
+            if (index === -1) {
+                return <FcCancel style={{ verticalAlign: "top" }} />
+            } else {
+                return <FcOk style={{ verticalAlign: "top" }} />
+            }
+        };
+        // if the maximum amount of students is reached or if the date is already expired
+        if (lesson.registeredStudents.length === lesson.maxStudent | new Date() > new Date(lesson.date)) {
+            return <FcCancel style={{ verticalAlign: "top" }} />
+        }
+        // if user can register
+        return <FcPlus style={{ verticalAlign: "top" }} />
+    }
 
     let registerButton = <button onClick={() => { register(selectedLesson, user._id) }}>S'inscrire</button>
 
@@ -91,23 +111,17 @@ export default function Calendar() {
                     setCorrespondingProfessor(info.event._def.extendedProps.professorId)
                     isOpen(true)
                 }}
-                eventContent={function (arg) {
-                    let title = document.createElement('div')
-                    let numberOfStudents = document.createElement('div')
-
-                    title.innerHTML = arg.event.title
-                    numberOfStudents.innerHTML = arg.event.extendedProps.numberOfStudents
-
-                    let arrayOfDomNodes = [title, numberOfStudents]
-                    return { domNodes: arrayOfDomNodes }
-                }
-                }
-            // slotLabelContent={
-            //     function (level) {
-            //         var hours = ["08h05", "09h00", "09h55", "11h05", "12h00", "13h10", "14h05", "14h00", "15h10", "16h05", "17h00", "17h55"]
-            //         return hours[level]
-            //     }
-            // }
+                eventContent={function renderEventContent(eventInfo) {
+                    return (
+                        <div className="container nopadding">
+                            <div className="timeStart nopadding">{eventInfo.timeText.split('-')[0]}</div>
+                            <div className="status nopadding">{GetStatus(eventInfo.event.extendedProps.lesson)}</div>
+                            <div className="title">{eventInfo.event._def.title}</div>
+                            <div className="timeEnd nopadding">{eventInfo.timeText.split('-')[1]}</div>
+                            <div className="nbStudents nopadding">{eventInfo.event.extendedProps.numberOfStudents}</div>
+                        </div>
+                    )
+                }}
             />
             {open === true ? lessonInfo : null}
         </div >

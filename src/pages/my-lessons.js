@@ -9,11 +9,12 @@ import { useSelector } from "react-redux"
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 
 export default function MyLessons() {
-    const user = useSelector(state => state.user.userInfo)
+    const user = useSelector(state => state.user.userInfo);
     const [lessons, setLessons] = useState([]);
-    let lessonNumber = 0
+    let lessonNumber = 0;
     const [openEdit, isEditOpen] = useState(false);
     const [selectedLesson, setSelectedLesson] = useState('');
+    const [deletedLesson, setDeletedLesson] = useState('');
 
     useEffect(() => {
         axios.get('http://localhost:5000/api/lessons/')
@@ -23,7 +24,7 @@ export default function MyLessons() {
             .catch((error) => {
                 console.log(error);
             });
-    }, []);
+    }, [deletedLesson]);
 
     function compare(a, b) {
         if (a.date < b.date) {
@@ -40,7 +41,8 @@ export default function MyLessons() {
     function deleteLesson(lessonId) {
         axios.delete(`http://localhost:5000/api/lessons/${lessonId}`)
             .then(res => console.log(res.data));
-        window.location.reload()
+
+        setDeletedLesson(lessons)
     }
 
     if (!user) return null

@@ -18,7 +18,7 @@ export default function ClassesList(props) {
 
     function onChangeClasse(e) {
         setClasse(e.target.value);
-        props.onChange(e.target.value)
+        if (props.onChange) props.onChange(e.target.value)
     }
 
     return (

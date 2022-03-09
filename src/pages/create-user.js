@@ -85,7 +85,7 @@ export default function CreateUser() {
     }
 
     return (
-        <div>
+        <div className="box">
             <h3>Créer un nouvel utilisateur</h3>
             <form onSubmit={onSubmit}>
                 <div className="form-group">

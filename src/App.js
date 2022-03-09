@@ -11,7 +11,8 @@ import EditLessons from "./pages/edit-lesson";
 import CreateLesson from "./pages/create-lesson";
 import CreateUser from "./pages/create-user";
 import MyLessons from "./pages/my-lessons";
-import SubjectsManager from "./pages/subjects-manager.js"
+import SubjectsManager from "./pages/subjects-manager"
+import Statistics from "./pages/statistics"
 
 function App() {
   const stableDispatch = useCallback(useDispatch(), [])
@@ -47,6 +48,7 @@ function App() {
         <Route path="/create_user" component={CreateUser} />
         <Route path="/my_lessons" component={MyLessons} />
         <Route path="/subjects_manager" component={SubjectsManager} />
+        <Route path="/statistics" component={Statistics} />
       </div>
     </Router>
   );

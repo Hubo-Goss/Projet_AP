@@ -186,10 +186,11 @@ export default function CreateLesson() {
                                     className="li row"
                                     key={`${changeDate(date.toISOString()).props.children} ${getHour(date)}`}>
                                     <span className="col-10">
-                                        <span>{changeDate(date.toISOString())}</span>
-                                        <span> à {getHour(date)}</span>
+                                        <div>{changeDate(date.toISOString())}</div>
+                                        <div> à {getHour(date)}</div>
                                     </span>
-                                    <CloseButton className="col-2" onClick={() => { removeDate(date) }} />
+                                    <button type="button" className="btn-close verticallyAligned" aria-label="Close" onClick={() => { removeDate(date) }}></button>
+                                    {/* <CloseButton className="col-2" onClick={() => {  }} /> */}
                                 </li>
                             })}
                         </ul>

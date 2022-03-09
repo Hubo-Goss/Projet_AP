@@ -37,7 +37,7 @@ export default function LoginPage() {
     }
 
     return (
-        <form noValidate onSubmit={handleSubmit}>
+        <form id="loginForm" noValidate onSubmit={handleSubmit}>
             <TextField
                 variant="outlined"
                 margin="normal"
@@ -66,6 +66,7 @@ export default function LoginPage() {
                 type="submit"
                 variant="contained"
                 color="primary"
+                alignItem="center"
             >
                 Connexion
             </Button>

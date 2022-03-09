@@ -23,6 +23,7 @@ export default function ProfessorsList(props) {
         <select required
             className="form-control"
             onChange={onChangeProfessorId}>
+            <option value="DEFAULT" hidden>Choisissez un professeur</option>
             {
                 professors.map(professor => {
                     return <option

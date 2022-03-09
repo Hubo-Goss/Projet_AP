@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export default function ProfessorsList(props) {
+export default function StudentsList(props) {
     const [students, setStudents] = useState([]);
 
     useEffect(() => {
@@ -15,14 +15,15 @@ export default function ProfessorsList(props) {
             });
     }, []);
 
-    function onChangeStudentsId(e) {
+    function onChangeStudentId(e) {
         if (props.onChange) props.onChange(e.target.value)
     }
 
     return (
         <select required
             className="form-control"
-            onChange={onChangeStudentsId}>
+            onChange={onChangeStudentId}>
+            <option value="DEFAULT" hidden>Choisissez un élève</option>
             {
                 students.map(student => {
                     return <option

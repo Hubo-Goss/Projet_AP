@@ -12,9 +12,74 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.verticallyAligned {
+  vertical-align: middle;
+  align-self: center;
+}
 /*#endregion General */
 
+/*#region Login */
+#loginForm {
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/*#endregion Login */
+
 /*#region Calendar */
+  /*#region Lesson display on calendar */
+  .container {
+    display: grid;
+    height: 100%;
+    grid-template-columns: 25px 1fr 25px;
+    grid-template-rows: 15px 1fr 15px;
+  }
+  
+  .nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  .timeStart {
+    text-align: left;
+    font-size: 0.7em;
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+  
+  .status {
+    text-align: right;
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+  }
+  
+  .title {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 0.98em;
+    grid-column: 2 / 3;
+    grid-row: 1 / 4;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  
+  .timeEnd {
+    text-align: left;
+    font-size: 0.7em;
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+  }
+  
+  .nbStudents {
+    text-align: right;
+    font-size: 0.7em;
+    grid-column: 3 / 4;
+    grid-row: 3 / 4;
+  }
+  /*#endregion Lesson display on calendar */
   /*#region Lesson (inside the modal) */
 .subject {
   text-align: center;
@@ -91,6 +156,11 @@ code {
   width: 33%;
   text-align: center;
   margin: auto;
+  padding-bottom: 25px;
+}
+
+.form-group {
+  margin-bottom: 10px;
 }
 
 #noResize {
@@ -98,10 +168,11 @@ code {
 }
 
 #datesList {
-  width: 125px;
+  width: 150px;
   margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 25px;
   padding-left: 15px;
 }
 
@@ -130,10 +201,24 @@ code {
 
 /*#region Subjects Manager */
 .subjectManagerBox{
-  width: 300px;
+  width: 33%;
   margin-top: 50px;
   margin-left: auto;
   margin-right: auto;
 }
 /*#endregion My Lessons */
 
+/*#region Statistics*/
+#downloadButton {
+  margin: 10px auto 10px auto;
+  padding: 3px 8px 3px 8px;
+  border: 3px solid #c6c6c6;
+  border-radius: 3px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+#downloadButton:hover {
+  background-color: #98c1d99d;
+}
+/*#endregion Statistics*/

@@ -18,7 +18,7 @@ export default function SubjectsList(props) {
 
     function onChangeSubject(e) {
         setSubject(e.target.value);
-        props.onChange(e.target.value);
+        if (props.onChange) props.onChange(e.target.value);
     }
 
     function compare(a, b) {

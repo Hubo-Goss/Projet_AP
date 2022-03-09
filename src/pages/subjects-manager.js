@@ -5,7 +5,6 @@ import InputGroup from "react-bootstrap/inputgroup";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/button";
 import ListGroup from "react-bootstrap/listgroup";
-import CloseButton from "react-bootstrap/closebutton";
 
 export default function SubjectsManager() {
     const user = useSelector(state => state.user.userInfo)
@@ -92,9 +91,9 @@ export default function SubjectsManager() {
             <div>
                 <ListGroup>
                     {subjects.map(subject => {
-                        return <ListGroup.Item key={subject._id} onClick={() => console.log(subject._id)}>
-                            {subject.subjectName}
-                            <CloseButton onClick={() => { deleteSubject(subject._id) }} />
+                        return <ListGroup.Item key={subject._id} style={{ display: "grid", gridTemplateColumns: "1fr 24px" }} onClick={() => console.log(subject._id)}>
+                            <span>{subject.subjectName}</span>
+                            <button type="button" className="btn-close" aria-label="Close" onClick={() => { deleteSubject(subject._id) }}></button>
                         </ListGroup.Item>
                     })}
                 </ListGroup>

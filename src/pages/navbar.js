@@ -32,6 +32,12 @@ export default function Navbar() {
         </li>
     )
 
+    const statistiques = (
+        <li className="navbar-item">
+            <Link to="/statistics" className="nav-link">Statistiques</Link>
+        </li>
+    )
+
     return (
         <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
             <Link to="/calendar" className="navbar-brand">Calendrier</Link>
@@ -40,6 +46,7 @@ export default function Navbar() {
                     {user.role === 'Professor' || user.role === 'Admin' ? createLesson : ''}
                     {user.role === 'Admin' ? createUser : ''}
                     {user.role === 'Admin' ? subjectsManager : ''}
+                    {user.role === 'Admin' ? statistiques : ''}
                     <li className="navbar-item">
                         <Link to="/my_lessons" className="nav-link">Mes leçons</Link>
                     </li>
